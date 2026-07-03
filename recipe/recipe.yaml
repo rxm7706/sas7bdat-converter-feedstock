@@ -1,0 +1,49 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/prefix-dev/recipe-format/main/schema.json
+schema_version: 1
+
+context:
+  version: "4.0.0"
+  python_min: "3.11"
+
+package:
+  name: sas7bdat-converter
+  version: ${{ version }}
+
+source:
+  url: https://pypi.org/packages/source/s/sas7bdat-converter/sas7bdat_converter-${{ version }}.tar.gz
+  sha256: 11227c2707b6c423427cf00c151c7eb8c0af01e3c87b0790b3e5c656f489e32c
+
+build:
+  number: 0
+  noarch: python
+  script: ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+
+requirements:
+  host:
+    - python ${{ python_min }}.*
+    - pip
+    - hatchling
+  run:
+    - python >=${{ python_min }}
+    - pandas >=3.0.0
+
+tests:
+  - python:
+      imports:
+      pip_check: true
+      python_version:
+        - ${{ python_min }}.*
+        - "*"
+
+about:
+  homepage: https://github.com/sanders41/sas7bdat-converter
+  license: MIT
+  license_file: LICENSE
+  summary: Convert sas7bdat and xport files into other formats
+  description: |
+    Convert sas7bdat and xport files into other formats
+  documentation: https://github.com/sanders41/sas7bdat-converter
+
+extra:
+  recipe-maintainers:
+    - rxm7706
